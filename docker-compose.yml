@@ -1,0 +1,28 @@
+services:
+  swatchan:
+    image: registry.sccs.swarthmore.edu/cs77-s25/swatchan/swatchan:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+    #env_file:
+    #  - .env
+      DOMAIN: https://swatchan.sccs.swarthmore.edu/
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik"
+        - "traefik.http.routers.swatchan.entrypoints=https"
+        - "traefik.http.routers.swatchan.rule=Host(`swatchan.sccs.swarthmore.edu`)"
+        - "traefik.http.routers.swatchan.tls=true"
+        - "traefik.http.routers.swatchan.tls.certresolver=letsEncrypt"
+        - "traefik.http.services.swatchan.loadbalancer.server.port=6000"
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+
+  traefik:
+    external: true

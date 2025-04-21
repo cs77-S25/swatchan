@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+<script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+{% endblock %}
+
+{%block content %}
+    <!-- New Thread Form -->
+    <form>
+        <input type="text" id="title" placeholder="Thread title" required>
+        <textarea id="content" placeholder="Thread content" required></textarea>
+        <button type="submit">Create Thread</button>
+    </form>
+
+    <!-- Threads -->
+    <div class="list-group">
+        {% for thread in threads %}
+            <a href="{{ url_for('thread', thread_id=thread.id) }}" class="list-group-item">
+                <h5>{{ thread.title }}</h5>
+                <p>{{ thread.content }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

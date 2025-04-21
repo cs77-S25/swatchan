@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{%block content %}
+    <h1>{{ thread.title }}</h1>
+    <p>{{ thread.content }}</p>
+    
+    <hr>
+
+    <h3>Comments</h3>
+    <ul class="list-group">
+        {% for comment in thread.comments %}
+            <li class="list-group-item">{{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ url_for('comment', thread_id=thread.id) }}" method="post" class="mt-3">
+        <textarea name="comment" class="form-control mb-2" placeholder="Reply..." required></textarea>
+        <button type="submit" class="btn btn-secondary">Post Comment</button>
+    </form>
+
+{% endblock %}
